@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sale_order_inherit_sale_advance_payment" model="ir.ui.view">
+        <field name="name">sale.order.inherit.sale.advance.payment</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page/field[@name='order_line']/.." position="after">
+                <page name="advance_payment_page" string="Advance Payment Information">
+                    <field name="payment_history_ids" readonly="1">
+                        <tree>
+                            <field name="name" string="Name"/>
+                            <field name="payment_date"/>
+                            <field name="partner_id"/>
+                            <field name="journal_id"/>
+                            <field name="payment_method_id"/>
+                            <field name="currency_id"/>
+                            <field name="advance_amount"/>
+                            <field name="total_amount"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <button name="action_confirm" position="before">
+              <button class="oe_highlight" type="object" name="set_sale_advance_payment" string=" Advance Payment" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+            </button>
+          </field>
+    </record>
+
+    <record id="advance_payment_history_form" model="ir.ui.view">
+        <field name="name">advance.payment.history.form</field>
+        <field name="model">advance.payment.history</field>
+        <field name="arch" type="xml">
+            <form>
+                <group string="Payment Details">
+                    <group>
+                        <field name="name"/>
+                        <field name="advance_amount"/>
+                        <field name="total_amount"/>
+                    </group>
+                    <group>
+                        <field name="payment_method_id"/>
+                        <field name="journal_id"/>
+                        <field name="payment_date"/>
+                    </group>
+                </group>
+                <group string="Currency">
+                    <field name="currency_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+</odoo>
